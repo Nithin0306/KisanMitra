@@ -1,0 +1,77 @@
+[
+  {
+    "scheme_id": "PM-KISAN-001",
+    "scheme_name": "PM-KISAN Samman Nidhi",
+    "ministry": "Ministry of Agriculture & Farmers Welfare",
+    "description": "₹6000/year income support to land-holding farmer families in three equal installments.",
+    "eligibility": {
+      "states": [],
+      "farmer_types": ["small", "marginal"],
+      "crops": [],
+      "landholding_max_hectares": 2.0,
+      "excludes": ["government_employee", "income_tax_payer"]
+    },
+    "application_url": "https://pmkisan.gov.in",
+    "deadline": null
+  },
+  {
+    "scheme_id": "FASAL-BIMA-001",
+    "scheme_name": "Pradhan Mantri Fasal Bima Yojana",
+    "ministry": "Ministry of Agriculture & Farmers Welfare",
+    "description": "Crop insurance scheme protecting against crop loss from natural calamities, pests, diseases.",
+    "eligibility": {
+      "states": [],
+      "farmer_types": ["small", "marginal", "tenant"],
+      "crops": ["wheat", "rice", "maize", "cotton", "groundnut", "sorghum", "chickpea"],
+      "landholding_max_hectares": null,
+      "excludes": []
+    },
+    "application_url": "https://pmfby.gov.in",
+    "deadline": null
+  },
+  {
+    "scheme_id": "KCC-001",
+    "scheme_name": "Kisan Credit Card",
+    "ministry": "Ministry of Agriculture & Farmers Welfare",
+    "description": "Short-term credit for crop cultivation, post-harvest expenses, and allied activities.",
+    "eligibility": {
+      "states": [],
+      "farmer_types": ["small", "marginal", "tenant"],
+      "crops": [],
+      "landholding_max_hectares": null,
+      "excludes": []
+    },
+    "application_url": "https://www.nabard.org/kcc",
+    "deadline": null
+  },
+  {
+    "scheme_id": "MH-SHETKARI-001",
+    "scheme_name": "Maharashtra Shetkari Sanman Yojana",
+    "ministry": "Government of Maharashtra — Agriculture Dept.",
+    "description": "State-level debt waiver for small and marginal farmers in Maharashtra.",
+    "eligibility": {
+      "states": ["Maharashtra"],
+      "farmer_types": ["small", "marginal"],
+      "crops": [],
+      "landholding_max_hectares": 2.0,
+      "excludes": []
+    },
+    "application_url": null,
+    "deadline": null
+  },
+  {
+    "scheme_id": "MGNREGS-AGRI-001",
+    "scheme_name": "MGNREGS Agricultural Works",
+    "ministry": "Ministry of Rural Development",
+    "description": "Wage employment guarantee for land development, irrigation works on small/marginal farms.",
+    "eligibility": {
+      "states": [],
+      "farmer_types": ["small", "marginal", "tenant"],
+      "crops": [],
+      "landholding_max_hectares": null,
+      "excludes": []
+    },
+    "application_url": "https://nrega.nic.in",
+    "deadline": null
+  }
+]

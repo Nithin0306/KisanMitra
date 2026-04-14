@@ -1,0 +1,67 @@
+{
+  "_comment": "District-level sowing windows. Keys: state → district → season → {sow_start (MM-DD), sow_end (MM-DD)}",
+  "Maharashtra": {
+    "Nashik": {
+      "kharif": { "sow_start": "06-01", "sow_end": "07-15" },
+      "rabi":   { "sow_start": "10-15", "sow_end": "11-30" },
+      "zaid":   { "sow_start": "02-01", "sow_end": "03-15" }
+    },
+    "Pune": {
+      "kharif": { "sow_start": "06-01", "sow_end": "07-10" },
+      "rabi":   { "sow_start": "10-20", "sow_end": "11-30" },
+      "zaid":   { "sow_start": "02-01", "sow_end": "03-10" }
+    },
+    "Nagpur": {
+      "kharif": { "sow_start": "06-15", "sow_end": "07-20" },
+      "rabi":   { "sow_start": "10-15", "sow_end": "11-25" }
+    }
+  },
+  "Punjab": {
+    "Ludhiana": {
+      "kharif": { "sow_start": "05-15", "sow_end": "07-01" },
+      "rabi":   { "sow_start": "10-01", "sow_end": "11-15" }
+    },
+    "Amritsar": {
+      "kharif": { "sow_start": "06-01", "sow_end": "07-01" },
+      "rabi":   { "sow_start": "10-01", "sow_end": "11-10" }
+    }
+  },
+  "Rajasthan": {
+    "Jaipur": {
+      "kharif": { "sow_start": "06-15", "sow_end": "07-31" },
+      "rabi":   { "sow_start": "10-15", "sow_end": "12-01" }
+    },
+    "Jodhpur": {
+      "kharif": { "sow_start": "07-01", "sow_end": "08-15" },
+      "rabi":   { "sow_start": "10-20", "sow_end": "12-01" }
+    }
+  },
+  "Tamil Nadu": {
+    "Coimbatore": {
+      "kharif": { "sow_start": "06-01", "sow_end": "07-15" },
+      "rabi":   { "sow_start": "10-01", "sow_end": "11-15" },
+      "zaid":   { "sow_start": "01-15", "sow_end": "02-28" }
+    },
+    "Thanjavur": {
+      "kharif": { "sow_start": "06-15", "sow_end": "07-31" },
+      "rabi":   { "sow_start": "10-01", "sow_end": "11-30" }
+    }
+  },
+  "Uttar Pradesh": {
+    "Lucknow": {
+      "kharif": { "sow_start": "06-01", "sow_end": "07-15" },
+      "rabi":   { "sow_start": "10-15", "sow_end": "11-30" }
+    },
+    "Agra": {
+      "kharif": { "sow_start": "06-15", "sow_end": "07-20" },
+      "rabi":   { "sow_start": "10-20", "sow_end": "12-01" }
+    }
+  },
+  "_default": {
+    "_default": {
+      "kharif": { "sow_start": "06-15", "sow_end": "07-31" },
+      "rabi":   { "sow_start": "10-15", "sow_end": "11-30" },
+      "zaid":   { "sow_start": "02-01", "sow_end": "03-15" }
+    }
+  }
+}

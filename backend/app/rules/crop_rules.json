@@ -1,0 +1,116 @@
+{
+  "version": "1.0.0",
+  "_comment": "Soil-crop compatibility matrix. Keys are crop names. extend to 20+ crops for production.",
+  "crops": {
+    "wheat": {
+      "compatible_soils": ["loamy", "clay_loam", "alluvial"],
+      "incompatible_soils": ["sandy", "laterite", "saline", "waterlogged"],
+      "temp_range_c": { "min": 10, "max": 25, "optimal_min": 15, "optimal_max": 22 },
+      "rainfall_mm_season": { "min": 300, "max": 1000 },
+      "growing_days": 120,
+      "seasons": ["rabi"],
+      "water_need": "medium",
+      "drought_tolerant": false,
+      "pest_seasons": ["11-01", "01-31"]
+    },
+    "rice": {
+      "compatible_soils": ["clay", "clay_loam", "alluvial", "black_cotton"],
+      "incompatible_soils": ["sandy", "laterite", "saline"],
+      "temp_range_c": { "min": 20, "max": 40, "optimal_min": 25, "optimal_max": 35 },
+      "rainfall_mm_season": { "min": 1000, "max": 2500 },
+      "growing_days": 150,
+      "seasons": ["kharif"],
+      "water_need": "high",
+      "drought_tolerant": false,
+      "pest_seasons": ["07-01", "09-30"]
+    },
+    "chickpea": {
+      "compatible_soils": ["loamy", "sandy_loam", "black_cotton", "red_laterite"],
+      "incompatible_soils": ["saline", "waterlogged"],
+      "temp_range_c": { "min": 10, "max": 30, "optimal_min": 18, "optimal_max": 26 },
+      "rainfall_mm_season": { "min": 200, "max": 700 },
+      "growing_days": 95,
+      "seasons": ["rabi"],
+      "water_need": "low",
+      "drought_tolerant": true,
+      "pest_seasons": ["12-01", "02-28"]
+    },
+    "cotton": {
+      "compatible_soils": ["black_cotton", "loamy", "clay_loam"],
+      "incompatible_soils": ["sandy", "saline", "waterlogged", "laterite"],
+      "temp_range_c": { "min": 21, "max": 38, "optimal_min": 25, "optimal_max": 35 },
+      "rainfall_mm_season": { "min": 500, "max": 1200 },
+      "growing_days": 180,
+      "seasons": ["kharif"],
+      "water_need": "medium",
+      "drought_tolerant": false,
+      "pest_seasons": ["08-01", "10-31"]
+    },
+    "maize": {
+      "compatible_soils": ["loamy", "sandy_loam", "alluvial", "red_laterite"],
+      "incompatible_soils": ["waterlogged", "saline"],
+      "temp_range_c": { "min": 18, "max": 35, "optimal_min": 22, "optimal_max": 30 },
+      "rainfall_mm_season": { "min": 500, "max": 1500 },
+      "growing_days": 90,
+      "seasons": ["kharif", "rabi"],
+      "water_need": "medium",
+      "drought_tolerant": false,
+      "pest_seasons": ["07-01", "08-31"]
+    },
+    "sorghum": {
+      "compatible_soils": ["loamy", "sandy_loam", "red_laterite", "black_cotton"],
+      "incompatible_soils": ["saline", "waterlogged"],
+      "temp_range_c": { "min": 20, "max": 40, "optimal_min": 26, "optimal_max": 34 },
+      "rainfall_mm_season": { "min": 300, "max": 1100 },
+      "growing_days": 100,
+      "seasons": ["kharif", "rabi"],
+      "water_need": "low",
+      "drought_tolerant": true,
+      "pest_seasons": ["06-15", "08-15"]
+    },
+    "pearl_millet": {
+      "compatible_soils": ["sandy", "sandy_loam", "loamy", "red_laterite"],
+      "incompatible_soils": ["saline", "waterlogged", "clay"],
+      "temp_range_c": { "min": 20, "max": 42, "optimal_min": 28, "optimal_max": 38 },
+      "rainfall_mm_season": { "min": 200, "max": 700 },
+      "growing_days": 70,
+      "seasons": ["kharif"],
+      "water_need": "low",
+      "drought_tolerant": true,
+      "pest_seasons": ["07-01", "08-31"]
+    },
+    "groundnut": {
+      "compatible_soils": ["sandy", "sandy_loam", "red_laterite", "loamy"],
+      "incompatible_soils": ["clay", "saline", "waterlogged"],
+      "temp_range_c": { "min": 20, "max": 35, "optimal_min": 25, "optimal_max": 30 },
+      "rainfall_mm_season": { "min": 400, "max": 1200 },
+      "growing_days": 110,
+      "seasons": ["kharif", "zaid"],
+      "water_need": "medium",
+      "drought_tolerant": false,
+      "pest_seasons": ["07-01", "09-30"]
+    },
+    "sugarcane": {
+      "compatible_soils": ["alluvial", "loamy", "clay_loam", "black_cotton"],
+      "incompatible_soils": ["sandy", "laterite", "saline"],
+      "temp_range_c": { "min": 20, "max": 38, "optimal_min": 26, "optimal_max": 33 },
+      "rainfall_mm_season": { "min": 1200, "max": 3000 },
+      "growing_days": 365,
+      "seasons": ["kharif"],
+      "water_need": "high",
+      "drought_tolerant": false,
+      "pest_seasons": ["09-01", "11-30"]
+    },
+    "mustard": {
+      "compatible_soils": ["loamy", "sandy_loam", "alluvial", "clay_loam"],
+      "incompatible_soils": ["saline", "waterlogged"],
+      "temp_range_c": { "min": 5, "max": 25, "optimal_min": 10, "optimal_max": 20 },
+      "rainfall_mm_season": { "min": 250, "max": 600 },
+      "growing_days": 110,
+      "seasons": ["rabi"],
+      "water_need": "low",
+      "drought_tolerant": true,
+      "pest_seasons": ["11-01", "01-31"]
+    }
+  }
+}

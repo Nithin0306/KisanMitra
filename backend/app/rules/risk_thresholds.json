@@ -1,0 +1,18 @@
+{
+  "_comment": "Risk threshold definitions. All values are deterministic cutoffs — not learned, not LLM-derived.",
+  "drought_index": {
+    "high":   { "total_rainfall_mm_14d": 5,  "label": "Severe drought risk — recommend drought-tolerant crops only" },
+    "medium": { "total_rainfall_mm_14d": 20, "label": "Moderate drought risk — prefer low water-need crops" },
+    "low":    { "total_rainfall_mm_14d": 40, "label": "Mild drought risk — monitor irrigation" }
+  },
+  "excess_rain": {
+    "flag_mm_per_day": 80,
+    "label": "Flood risk — avoid waterlogging-intolerant crops"
+  },
+  "pest_season_penalty": 0.15,
+  "system_risk_rules": {
+    "high":   ["total_rain_14d <= drought_high_threshold", "any_day_rain > excess_rain_threshold"],
+    "medium": ["total_rain_14d <= drought_low_threshold"],
+    "low":    ["otherwise"]
+  }
+}
