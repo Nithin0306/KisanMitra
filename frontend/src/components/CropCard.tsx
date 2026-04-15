@@ -1,30 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { CropResponse } from '../context/AppContext';
 import { RISK_COLORS } from '../utils/constants';
 import { useStrings } from '../utils/language';
 import { useAppContext } from '../context/AppContext';
 
 const CROP_EMOJI: Record<string, string> = {
-  wheat: '🌾',
-  rice: '🍚',
-  chickpea: '🫘',
-  cotton: '🌿',
-  maize: '🌽',
-  sorghum: '🌾',
-  pearl_millet: '🌾',
-  groundnut: '🥜',
-  sugarcane: '🎋',
-  mustard: '🌻',
+  wheat: '🌾', rice: '🍚', chickpea: '🫘', cotton: '🌿',
+  maize: '🌽', sorghum: '🌾', pearl_millet: '🌾',
+  groundnut: '🥜', sugarcane: '🎋', mustard: '🌻',
 };
 
 function cropEmoji(name: string): string {
   return CROP_EMOJI[name.toLowerCase()] ?? '🌱';
 }
 
-type Props = {
-  data: CropResponse;
-};
+type Props = { data: CropResponse };
 
 export function CropCard({ data }: Props) {
   const { state } = useAppContext();
@@ -32,38 +23,27 @@ export function CropCard({ data }: Props) {
   const riskColor = RISK_COLORS[data.risk_level];
 
   return (
-    <View className="bg-white rounded-2xl p-[18px] mb-3 border border-green-50 shadow-sm shadow-black/5">
-      <View className="flex-row justify-between items-center mb-3.5">
-        <Text className="text-[17px] font-bold text-green-900">{strings.cropCard}</Text>
-        <View 
-          className="px-2.5 py-1 rounded-full border"
-          style={{ backgroundColor: riskColor.bg, borderColor: riskColor.border }}
-        >
-          <Text className="text-xs font-bold tracking-wide" style={{ color: riskColor.text }}>
+    <View style={styles.card}>
+      <View style={styles.header}>
+        <Text style={styles.title}>{strings.cropCard}</Text>
+        <View style={[styles.riskBadge, { backgroundColor: riskColor.bg, borderColor: riskColor.border }]}>
+          <Text style={[styles.riskText, { color: riskColor.text }]}>
             {strings.riskLabel}: {data.risk_level.toUpperCase()}
           </Text>
         </View>
       </View>
 
-      <View className="gap-2.5 mb-3">
+      <View style={styles.cropList}>
         {data.top_3_crops.map((crop, idx) => (
-          <View 
-            key={crop.crop_name} 
-            className={`flex-row items-center gap-2.5 px-2.5 rounded-xl ${
-              idx === 0 ? 'bg-green-50 py-2.5' : 'bg-[#F9FBE7] py-1.5'
-            }`}
-          >
-            <Text className="text-[28px]">{cropEmoji(crop.crop_name)}</Text>
-            <View className="flex-1">
-              <Text className={`capitalize ${
-                idx === 0 ? 'text-lg text-green-900 font-bold' : 'text-base font-semibold text-slate-700'
-              }`}>
+          <View key={crop.crop_name} style={[styles.cropRow, idx === 0 && styles.topCrop]}>
+            <Text style={styles.cropEmoji}>{cropEmoji(crop.crop_name)}</Text>
+            <View style={styles.cropInfo}>
+              <Text style={[styles.cropName, idx === 0 && styles.topCropName]}>
                 {idx === 0 ? '⭐ ' : `${idx + 1}. `}{crop.crop_name.replace('_', ' ')}
               </Text>
-              <Text className="text-xs text-slate-500 mt-0.5">
+              <Text style={styles.cropFit}>
                 {crop.climate_fit === 'optimal' ? '✅ Optimal conditions'
-                  : crop.climate_fit === 'marginal' ? '⚠️ Marginal conditions'
-                  : ''}
+                  : crop.climate_fit === 'marginal' ? '⚠️ Marginal conditions' : ''}
               </Text>
             </View>
           </View>
@@ -71,14 +51,70 @@ export function CropCard({ data }: Props) {
       </View>
 
       {data.reasoning_factors.length > 0 && (
-        <Text className="text-[13px] text-slate-600 leading-5 bg-slate-50 p-2.5 rounded-lg mt-1" numberOfLines={2}>
+        <Text style={styles.reasoning} numberOfLines={2}>
           💬 {data.reasoning_factors[0]}
         </Text>
       )}
 
       {data.degraded_mode && (
-        <Text className="text-xs text-orange-600 mt-2 font-medium">⚠️ Using offline data</Text>
+        <Text style={styles.degraded}>⚠️ Using offline data</Text>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 12,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    borderWidth: 1,
+    borderColor: '#E8F5E9',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+  title: { fontSize: 17, fontWeight: '700', color: '#1B5E20' },
+  riskBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  riskText: { fontSize: 12, fontWeight: '700', letterSpacing: 0.5 },
+  cropList: { gap: 10, marginBottom: 12 },
+  cropRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#F9FBE7',
+  },
+  topCrop: { backgroundColor: '#E8F5E9', paddingVertical: 10 },
+  cropEmoji: { fontSize: 28 },
+  cropInfo: { flex: 1 },
+  cropName: { fontSize: 16, fontWeight: '600', color: '#37474F', textTransform: 'capitalize' },
+  topCropName: { fontSize: 18, color: '#1B5E20', fontWeight: '700' },
+  cropFit: { fontSize: 12, color: '#78909C', marginTop: 2 },
+  reasoning: {
+    fontSize: 13,
+    color: '#546E7A',
+    lineHeight: 20,
+    backgroundColor: '#F5F5F5',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 4,
+  },
+  degraded: { fontSize: 12, color: '#E65100', marginTop: 8, fontWeight: '500' },
+});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { LANGUAGES, LanguageCode } from '../utils/constants';
 import { useAppContext } from '../context/AppContext';
 import { useStrings } from '../utils/language';
@@ -13,14 +13,12 @@ export function LanguageSelector() {
   };
 
   return (
-    <View className="py-2">
-      <Text className="text-[13px] text-slate-500 mb-2 px-5 font-medium tracking-wide">
-        {strings.selectLanguage}
-      </Text>
+    <View style={styles.wrapper}>
+      <Text style={styles.label}>{strings.selectLanguage}</Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerClassName="px-4 gap-2"
+        contentContainerStyle={styles.row}
       >
         {LANGUAGES.map((lang) => {
           const active = lang.code === state.language;
@@ -28,15 +26,13 @@ export function LanguageSelector() {
             <TouchableOpacity
               key={lang.code}
               onPress={() => select(lang.code)}
-              className={`min-w-[56px] px-3.5 py-2.5 rounded-full border-[1.5px] items-center justify-center ${
-                active ? 'bg-green-900 border-green-900' : 'bg-slate-100 border-slate-300'
-              }`}
+              style={[styles.pill, active && styles.pillActive]}
               activeOpacity={0.75}
               accessibilityLabel={lang.label}
               accessibilityRole="radio"
               accessibilityState={{ selected: active }}
             >
-              <Text className={`text-sm font-semibold ${active ? 'text-white' : 'text-slate-600'}`}>
+              <Text style={[styles.pillText, active && styles.pillTextActive]}>
                 {lang.label}
               </Text>
             </TouchableOpacity>
@@ -46,3 +42,34 @@ export function LanguageSelector() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: { paddingVertical: 8 },
+  label: {
+    fontSize: 13,
+    color: '#78909C',
+    marginBottom: 8,
+    paddingHorizontal: 20,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+  },
+  row: {
+    paddingHorizontal: 16,
+    gap: 8,
+    alignItems: 'flex-start',  // prevents pills from stretching to full screen height
+  },
+  pill: {
+    height: 44,
+    minWidth: 56,
+    paddingHorizontal: 14,
+    borderRadius: 24,
+    backgroundColor: '#F0F4F8',
+    borderWidth: 1.5,
+    borderColor: '#CFD8DC',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pillActive: { backgroundColor: '#1B5E20', borderColor: '#1B5E20' },
+  pillText: { fontSize: 14, color: '#546E7A', fontWeight: '600' },
+  pillTextActive: { color: '#FFFFFF' },
+});

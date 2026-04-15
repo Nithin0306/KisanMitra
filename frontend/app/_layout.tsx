@@ -1,17 +1,18 @@
 import { Stack } from 'expo-router';
 import '@/global.css';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { AppProvider, useAppContext } from '../src/context/AppContext';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function AppShell() {
   const { state } = useAppContext();
 
   if (!state.isLanguageLoaded) {
     return (
-      <View className="flex-1 bg-[#F7FBF7] items-center justify-center gap-2">
-        <Text className="text-[72px]">🌾</Text>
-        <Text className="text-[28px] font-extrabold text-green-900 tracking-wide">KisanMitra</Text>
+      <View style={styles.splash}>
+        <Text style={styles.splashEmoji}>🌾</Text>
+        <Text style={styles.splashName}>KisanMitra</Text>
         <ActivityIndicator color="#2E7D32" size="small" style={{ marginTop: 24 }} />
       </View>
     );
@@ -27,8 +28,27 @@ function AppShell() {
 
 export default function RootLayout() {
   return (
-    <AppProvider>
-      <AppShell />
-    </AppProvider>
+    <SafeAreaProvider>
+      <AppProvider>
+        <AppShell />
+      </AppProvider>
+    </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  splash: {
+    flex: 1,
+    backgroundColor: '#F7FBF7',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  splashEmoji: { fontSize: 72 },
+  splashName: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#1B5E20',
+    letterSpacing: 0.5,
+  },
+});

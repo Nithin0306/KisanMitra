@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  View, Text, SafeAreaView, TouchableOpacity, Vibration, Platform,
+  View, Text, TouchableOpacity, Vibration, Platform,
+  StyleSheet, ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MicButton } from '../components/MicButton';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { useAppContext } from '../context/AppContext';
 import { useStrings } from '../utils/language';
 import {
-  startRecording, stopRecordingAndTranscribe,
+  startRecording, stopRecordingAndTranscribe, SarvamSTTError,
 } from '../services/speech';
 import { queryBackend, pingBackend, NetworkError, APIError } from '../services/api';
 import { STT_CONFIDENCE_THRESHOLD } from '../utils/constants';
@@ -64,6 +66,8 @@ export function HomeScreen() {
           dispatch({ type: 'SET_ERROR', payload: strings.errorNetwork });
         } else if (err instanceof APIError) {
           dispatch({ type: 'SET_ERROR', payload: err.message });
+        } else if (err instanceof SarvamSTTError) {
+          dispatch({ type: 'SET_ERROR', payload: 'Voice recognition error. Please try again.' });
         } else {
           dispatch({ type: 'SET_ERROR', payload: strings.errorLowAudio });
         }
@@ -85,67 +89,178 @@ export function HomeScreen() {
   }, [state.isListening, state.language, strings]);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#F7FBF7]">
-      <View className="flex-1 items-center">
+    <SafeAreaView style={styles.safe}>
 
-        {backendOnline === false && (
-          <View className="w-full flex-row items-center justify-between bg-amber-50 px-4 py-2.5 border-b border-amber-300">
-            <Text className="flex-1 text-[13px] text-orange-900 font-medium">
-              ⚠️ Backend offline — check that the server is running
-            </Text>
-            <TouchableOpacity
-              onPress={() => pingBackend().then(ok => setBackendOnline(ok))}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            >
-              <Text className="text-[13px] text-blue-700 font-bold ml-3">Retry</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <LanguageSelector />
-
-        <View className="flex-1" />
-
-        <View className="items-center gap-1.5 mb-12">
-          <Text className="text-[64px]">🌾</Text>
-          <Text className="text-[32px] font-extrabold text-green-900 tracking-wide">KisanMitra</Text>
-          <Text className="text-[14px] text-slate-500 text-center px-5 leading-5" numberOfLines={2}>
-            விவசாயியின் நண்பன் · किसान का दोस्त · రైతు మిత్రుడు
+      {backendOnline === false && (
+        <View style={styles.offlineBanner}>
+          <Text style={styles.offlineText}>
+            ⚠️ Backend offline — server is not reachable
           </Text>
-        </View>
-
-        <View className="mb-12">
-          <MicButton onPress={handleMicPress} />
-        </View>
-
-        {state.error && (
-          <View className="flex-row items-center bg-red-50 rounded-xl px-4 py-3 mx-6 mb-4 gap-2 border border-red-200">
-            <Text className="flex-1 text-sm text-red-800 font-medium leading-5">{state.error}</Text>
-            <TouchableOpacity
-              onPress={() => dispatch({ type: 'SET_ERROR', payload: '' })}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <Text className="text-base text-red-800 font-bold">✕</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {state.response && !state.error && !state.isListening && !state.isLoading && (
           <TouchableOpacity
-            className="flex-row items-center bg-white rounded-3xl px-4 py-3 mx-6 mb-4 gap-2 shadow-sm shadow-black/5 border border-slate-200 max-w-[360px]"
-            onPress={() => router.push('/response' as any)}
-            activeOpacity={0.8}
+            onPress={() => pingBackend().then(ok => setBackendOnline(ok))}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Text className="text-lg">💬</Text>
-            <Text className="flex-1 text-sm text-slate-700 leading-5" numberOfLines={1}>
-              {state.response.voice_explanation}
-            </Text>
-            <Text className="text-xl text-slate-400 font-bold">›</Text>
+            <Text style={styles.retryText}>Retry</Text>
           </TouchableOpacity>
-        )}
+        </View>
+      )}
 
-        <View className="flex-[2]" />
+      <LanguageSelector />
+
+      <View style={styles.flex1} />
+
+      <View style={styles.heroArea}>
+        <Text style={styles.logo}>🌾</Text>
+        <Text style={styles.appName}>KisanMitra</Text>
+        <Text style={styles.tagline} numberOfLines={2}>
+          किसान का दोस्त · கர்ஷகனின் நண்பன் · రైతు మిత్రుడు
+        </Text>
       </View>
+
+      <View style={styles.micArea}>
+        <MicButton onPress={handleMicPress} />
+      </View>
+
+      {state.error ? (
+        <View style={styles.errorBanner}>
+          <Text style={styles.errorText}>{state.error}</Text>
+          <TouchableOpacity
+            onPress={() => dispatch({ type: 'SET_ERROR', payload: '' })}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={styles.errorDismiss}>✕</Text>
+          </TouchableOpacity>
+        </View>
+      ) : state.response && !state.isListening && !state.isLoading ? (
+        <TouchableOpacity
+          style={styles.chipRow}
+          onPress={() => router.push('/response' as any)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.chipIcon}>💬</Text>
+          <Text style={styles.chipText} numberOfLines={1}>
+            {state.response.voice_explanation}
+          </Text>
+          <Text style={styles.chipArrow}>›</Text>
+        </TouchableOpacity>
+      ) : null}
+
+      <View style={styles.flex2} />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F7FBF7',
+  },
+  offlineBanner: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFF8E1',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFD54F',
+  },
+  offlineText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#E65100',
+    fontWeight: '500',
+  },
+  retryText: {
+    fontSize: 13,
+    color: '#1565C0',
+    fontWeight: '700',
+    marginLeft: 12,
+  },
+  flex1: { flex: 1 },
+  flex2: { flex: 2 },
+  heroArea: {
+    alignItems: 'center',
+    marginBottom: 48,
+  },
+  logo: {
+    fontSize: 64,
+    lineHeight: 80,
+  },
+  appName: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#1B5E20',
+    letterSpacing: 0.5,
+    marginTop: 4,
+  },
+  tagline: {
+    fontSize: 13,
+    color: '#78909C',
+    textAlign: 'center',
+    paddingHorizontal: 32,
+    lineHeight: 20,
+    marginTop: 6,
+  },
+  micArea: {
+    alignItems: 'center',
+    marginBottom: 48,
+  },
+  errorBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFEBEE',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#EF9A9A',
+  },
+  errorText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#C62828',
+    fontWeight: '500',
+    lineHeight: 20,
+  },
+  errorDismiss: {
+    fontSize: 16,
+    color: '#C62828',
+    fontWeight: '700',
+    marginLeft: 8,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+  },
+  chipIcon: { fontSize: 18 },
+  chipText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#37474F',
+    lineHeight: 20,
+    marginLeft: 8,
+  },
+  chipArrow: {
+    fontSize: 20,
+    color: '#90A4AE',
+    fontWeight: '700',
+    marginLeft: 4,
+  },
+});

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  View, Text, SafeAreaView, ScrollView,
-  TouchableOpacity, ActivityIndicator
+  View, Text, ScrollView, TouchableOpacity,
+  ActivityIndicator, StyleSheet,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAppContext, CropResponse, MarketResponse, SchemeResponse } from '../context/AppContext';
 import { useStrings } from '../utils/language';
@@ -22,9 +23,7 @@ export function ResponseScreen() {
       hasSpokeRef.current = true;
       speakText(state.response.voice_explanation, state.language);
     }
-    return () => {
-      stopSpeaking();
-    };
+    return () => { stopSpeaking(); };
   }, []);
 
   const handleBack = () => {
@@ -41,8 +40,8 @@ export function ResponseScreen() {
 
   if (!state.response) {
     return (
-      <SafeAreaView className="flex-1 bg-[#F7FBF7]">
-        <View className="flex-1 items-center justify-center">
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.center}>
           <ActivityIndicator size="large" color="#2E7D32" />
         </View>
       </SafeAreaView>
@@ -50,51 +49,54 @@ export function ResponseScreen() {
   }
 
   const { intent, feature_response, voice_explanation, degraded_mode } = state.response;
+  const title = intent === 'crop_recommendation' ? strings.cropCard
+    : intent === 'market_price' ? strings.marketCard
+    : strings.schemeCard;
 
   return (
-    <SafeAreaView className="flex-1 bg-[#F7FBF7]">
+    <SafeAreaView style={styles.safe}>
 
-      <View className="flex-row items-center px-4 py-3.5 bg-white border-b border-gray-200">
+      {/* Header */}
+      <View style={styles.header}>
         <TouchableOpacity
           onPress={handleBack}
-          className="w-10 h-10 rounded-full bg-slate-50 items-center justify-center"
+          style={styles.headerBtn}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Text className="text-[22px] text-slate-700 font-semibold">←</Text>
+          <Text style={styles.backIcon}>←</Text>
         </TouchableOpacity>
-        <Text className="flex-1 text-center text-lg font-bold text-green-900">
-          {intent === 'crop_recommendation' ? strings.cropCard
-            : intent === 'market_price' ? strings.marketCard
-            : strings.schemeCard}
-        </Text>
+        <Text style={styles.headerTitle}>{title}</Text>
         <TouchableOpacity
           onPress={handleReplay}
-          className="w-10 h-10 rounded-full bg-green-50 items-center justify-center"
+          style={styles.headerBtn}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Text className="text-xl">🔊</Text>
+          <Text style={{ fontSize: 20 }}>🔊</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView
-        className="flex-1"
-        contentContainerClassName="p-4 gap-1"
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View className="flex-row bg-white rounded-2xl p-3.5 gap-2.5 mb-3 shadow-sm shadow-black/5 border border-green-100">
-          <Text className="text-[22px] mt-0.5">🤖</Text>
-          <Text className="flex-1 text-base text-neutral-900 leading-6 font-medium">{voice_explanation}</Text>
+        {/* AI voice bubble */}
+        <View style={styles.voiceBubble}>
+          <Text style={{ fontSize: 22, marginTop: 2 }}>🤖</Text>
+          <Text style={styles.voiceText}>{voice_explanation}</Text>
         </View>
 
-        {state.currentTranscript && (
-          <View className="flex-row items-center bg-slate-100 rounded-xl px-3 py-2 gap-2 mb-3">
-            <Text className="text-sm">🎤</Text>
-            <Text className="flex-1 text-[13px] text-slate-500 italic leading-snug" numberOfLines={2}>
+        {/* Transcript chip */}
+        {state.currentTranscript ? (
+          <View style={styles.transcriptChip}>
+            <Text style={{ fontSize: 14 }}>🎤</Text>
+            <Text style={styles.transcriptText} numberOfLines={2}>
               {state.currentTranscript}
             </Text>
           </View>
-        )}
+        ) : null}
 
+        {/* Feature cards */}
         {intent === 'crop_recommendation' && (
           <CropCard data={feature_response as CropResponse} />
         )}
@@ -106,16 +108,16 @@ export function ResponseScreen() {
         )}
 
         {intent === 'unknown' && (
-          <View className="bg-white rounded-2xl p-6 items-center gap-3 shadow-sm mt-2">
-            <Text className="text-[48px]">🤔</Text>
-            <Text className="text-base text-slate-600 text-center leading-6">{voice_explanation}</Text>
+          <View style={styles.unknownCard}>
+            <Text style={{ fontSize: 48 }}>🤔</Text>
+            <Text style={styles.unknownText}>{voice_explanation}</Text>
           </View>
         )}
 
         {degraded_mode && (
-          <View className="bg-amber-50 rounded-xl p-2.5 border border-amber-300 mt-1">
-            <Text className="text-[13px] text-orange-900 text-center font-medium">
-              ⚠️ Response uses cached data — live data unavailable
+          <View style={styles.degradedBanner}>
+            <Text style={styles.degradedText}>
+              ⚠️ Using cached data — live data unavailable
             </Text>
           </View>
         )}
@@ -123,16 +125,155 @@ export function ResponseScreen() {
         <View style={{ height: 100 }} />
       </ScrollView>
 
-      <View className="absolute bottom-0 left-0 right-0 p-4 pb-6 bg-transparent">
+      {/* Ask again button */}
+      <View style={styles.bottomBar}>
         <TouchableOpacity
-          className="flex-row items-center justify-center bg-green-800 rounded-full py-4 gap-2.5 shadow-lg shadow-green-900/40 elevation-md"
+          style={styles.askAgainBtn}
           onPress={handleBack}
           activeOpacity={0.85}
         >
-          <Text className="text-[22px]">🎤</Text>
-          <Text className="text-lg font-bold text-white tracking-wide">{strings.tapToSpeak}</Text>
+          <Text style={{ fontSize: 22 }}>🎤</Text>
+          <Text style={styles.askAgainText}>{strings.tapToSpeak}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F7FBF7',
+  },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  headerBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backIcon: {
+    fontSize: 22,
+    color: '#37474F',
+    fontWeight: '600',
+  },
+  headerTitle: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1B5E20',
+  },
+  scroll: { flex: 1 },
+  scrollContent: {
+    padding: 16,
+    gap: 12,
+  },
+  voiceBubble: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 14,
+    gap: 10,
+    borderWidth: 1,
+    borderColor: '#C8E6C9',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+  },
+  voiceText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#212121',
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  transcriptChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#ECEFF1',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  transcriptText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#607D8B',
+    fontStyle: 'italic',
+    lineHeight: 18,
+  },
+  unknownCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 24,
+    alignItems: 'center',
+    gap: 12,
+    elevation: 2,
+  },
+  unknownText: {
+    fontSize: 16,
+    color: '#546E7A',
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  degradedBanner: {
+    backgroundColor: '#FFF8E1',
+    borderRadius: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#FFD54F',
+  },
+  degradedText: {
+    fontSize: 13,
+    color: '#E65100',
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    paddingBottom: 28,
+  },
+  askAgainBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2E7D32',
+    borderRadius: 50,
+    paddingVertical: 16,
+    gap: 10,
+    elevation: 6,
+    shadowColor: '#1B5E20',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+  },
+  askAgainText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  },
+});

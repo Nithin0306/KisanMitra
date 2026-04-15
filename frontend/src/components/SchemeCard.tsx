@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Linking, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
 import { SchemeResponse } from '../context/AppContext';
 import { useStrings } from '../utils/language';
 import { useAppContext } from '../context/AppContext';
 
-type Props = {
-  data: SchemeResponse;
-};
+type Props = { data: SchemeResponse };
 
 export function SchemeCard({ data }: Props) {
   const { state } = useAppContext();
@@ -23,37 +21,66 @@ export function SchemeCard({ data }: Props) {
   };
 
   return (
-    <View className="bg-white rounded-2xl p-[18px] mb-3 border border-purple-50 shadow-sm shadow-black/5">
-      <Text className="text-[17px] font-bold text-purple-900 mb-1">{strings.schemeCard}</Text>
-      <Text className="text-xs text-slate-400 mb-3.5">
+    <View style={styles.card}>
+      <Text style={styles.title}>{strings.schemeCard}</Text>
+      <Text style={styles.countLabel}>
         {data.total_matches_found} schemes found — showing top {data.matched_schemes.length}
       </Text>
 
       {data.matched_schemes.map((scheme, idx) => (
         <View
           key={scheme.scheme_id}
-          className={`flex-row gap-3 py-3 ${idx < data.matched_schemes.length - 1 ? 'border-b border-purple-50' : ''}`}
+          style={[
+            styles.schemeRow,
+            idx < data.matched_schemes.length - 1 && styles.schemeBorder,
+          ]}
         >
-          <View className="w-9 items-center pt-0.5">
-            <Text className="text-[22px]">📋</Text>
+          <View style={styles.schemeLeft}>
+            <Text style={{ fontSize: 22 }}>📋</Text>
           </View>
-          <View className="flex-1 gap-1">
-            <Text className="text-[15px] font-bold text-indigo-900">{scheme.scheme_name}</Text>
-            <Text className="text-xs text-purple-600 font-medium" numberOfLines={1}>{scheme.ministry}</Text>
-            <Text className="text-sm text-slate-700 leading-5" numberOfLines={3}>
+          <View style={styles.schemeRight}>
+            <Text style={styles.schemeName}>{scheme.scheme_name}</Text>
+            <Text style={styles.ministry} numberOfLines={1}>{scheme.ministry}</Text>
+            <Text style={styles.eligibility} numberOfLines={3}>
               {scheme.eligibility_summary}
             </Text>
-            {scheme.application_url && (
+            {scheme.application_url ? (
               <TouchableOpacity
                 onPress={() => openURL(scheme.application_url)}
                 hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
               >
-                <Text className="text-[13px] text-blue-700 font-semibold mt-1">🔗 {strings.learnMore}</Text>
+                <Text style={styles.link}>🔗 {strings.learnMore}</Text>
               </TouchableOpacity>
-            )}
+            ) : null}
           </View>
         </View>
       ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 12,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    borderWidth: 1,
+    borderColor: '#EDE7F6',
+  },
+  title: { fontSize: 17, fontWeight: '700', color: '#4A148C', marginBottom: 4 },
+  countLabel: { fontSize: 12, color: '#9E9E9E', marginBottom: 14 },
+  schemeRow: { flexDirection: 'row', gap: 12, paddingVertical: 12 },
+  schemeBorder: { borderBottomWidth: 1, borderBottomColor: '#F3E5F5' },
+  schemeLeft: { width: 36, alignItems: 'center', paddingTop: 2 },
+  schemeRight: { flex: 1, gap: 4 },
+  schemeName: { fontSize: 15, fontWeight: '700', color: '#311B92' },
+  ministry: { fontSize: 12, color: '#7E57C2', fontWeight: '500' },
+  eligibility: { fontSize: 14, color: '#37474F', lineHeight: 20 },
+  link: { fontSize: 13, color: '#1565C0', fontWeight: '600', marginTop: 4 },
+});

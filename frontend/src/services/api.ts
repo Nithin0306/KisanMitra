@@ -54,10 +54,15 @@ async function apiFetch<T>(
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
-      throw new APIError(
-        body?.voice_message ?? body?.detail ?? `Server error ${res.status}`,
-        res.status
-      );
+      let errMessage = 'Server error ' + res.status;
+      if (body) {
+        if (typeof body.voice_message === 'string') errMessage = body.voice_message;
+        else if (typeof body.detail === 'string') errMessage = body.detail;
+        else if (typeof body.error === 'string') errMessage = body.error;
+        else if (body.detail) errMessage = JSON.stringify(body.detail);
+      }
+      
+      throw new APIError(errMessage, res.status);
     }
 
     return (await res.json()) as T;
