@@ -97,17 +97,17 @@ export function ResponseScreen() {
         ) : null}
 
         {/* Feature cards */}
-        {intent === 'crop_recommendation' && (
+        {!feature_response.error_code && intent === 'crop_recommendation' && (
           <CropCard data={feature_response as CropResponse} />
         )}
-        {intent === 'market_price' && (
+        {!feature_response.error_code && intent === 'market_price' && (
           <MarketCard data={feature_response as MarketResponse} />
         )}
-        {intent === 'scheme_match' && (
+        {!feature_response.error_code && intent === 'scheme_match' && (
           <SchemeCard data={feature_response as SchemeResponse} />
         )}
 
-        {intent === 'unknown' && (
+        {(intent === 'unknown' || feature_response.error_code) && (
           <View style={styles.unknownCard}>
             <Text style={{ fontSize: 48 }}>🤔</Text>
             <Text style={styles.unknownText}>{voice_explanation}</Text>
