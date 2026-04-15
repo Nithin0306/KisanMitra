@@ -26,11 +26,12 @@ class Settings(BaseSettings):
         "postgresql+asyncpg://kisan:kisan@localhost:5432/kisanmitra",
     )
 
-    #  Vertex AI (Gemini) 
+    #  Vertex AI / Gemini API 
     GCP_PROJECT_ID: str = Field("", description="GCP project for Vertex AI")
     GCP_REGION: str = Field("asia-south1", description="Vertex AI region")
-    LLM_MODEL: str = Field("gemini-1.5-flash", description="Vertex AI model name")
-    LLM_PROVIDER: str = Field("vertex_ai", description="vertex_ai | openai | anthropic | ollama")
+    GEMINI_API_KEY: str = Field("", description="Google Generative AI API Key")
+    LLM_MODEL: str = Field("gemini-1.5-flash", description="Gemini model name")
+    LLM_PROVIDER: str = Field("gemini", description="vertex_ai | gemini")
 
     #  Open-Meteo (free, no key required) 
     OPEN_METEO_BASE_URL: str = Field("https://api.open-meteo.com/v1/forecast")

@@ -23,7 +23,7 @@ SoilTypeEnum = Literal[
     "loamy", "sandy", "sandy_loam", "clay", "clay_loam", "saline", "waterlogged"
 ]
 
-LanguageCodeEnum = Literal["hi-IN", "ta-IN", "te-IN", "kn-IN", "mr-IN", "pa-IN"]
+LanguageCodeEnum = Literal["hi-IN", "ta-IN", "te-IN", "kn-IN", "mr-IN", "en-IN", "pa-IN"]
 
 
 #  Voice Query 
