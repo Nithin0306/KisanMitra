@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     GCP_PROJECT_ID: str = Field("", description="GCP project for Vertex AI")
     GCP_REGION: str = Field("asia-south1", description="Vertex AI region")
     GEMINI_API_KEY: str = Field("", description="Google Generative AI API Key")
-    LLM_MODEL: str = Field("gemini-1.5-flash", description="Gemini model name")
+    LLM_MODEL: str = Field("gemini-2.5-flash", description="Gemini model name")
     LLM_PROVIDER: str = Field("gemini", description="vertex_ai | gemini")
 
     #  Open-Meteo (free, no key required) 

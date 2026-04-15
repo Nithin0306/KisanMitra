@@ -47,6 +47,7 @@ PRE_BAKED: dict[str, dict[str, str]] = {
         "kn-IN": "ಕ್ಷಮಿಸಿ, ಅರ್ಥವಾಗಲಿಲ್ಲ. ಬೆಳೆ, ಮಾರುಕಟ್ಟೆ ಅಥವಾ ಯೋಜನೆ ಬಗ್ಗೆ ಕೇಳಿ.",
         "mr-IN": "माफ करा, मला समजले नाही. पीक, बाजारभाव किंवा सरकारी योजनेबद्दल विचारा.",
         "pa-IN": "ਮਾਫ਼ ਕਰਨਾ, ਮੈਨੂੰ ਸਮਝ ਨਹੀਂ ਆਇਆ। ਫਸਲ, ਮੰਡੀ ਭਾਅ ਜਾਂ ਸਰਕਾਰੀ ਯੋਜਨਾ ਬਾਰੇ ਪੁੱਛੋ।",
+        "en-IN": "Sorry, I couldn't understand. Please ask about crops, market prices, or government schemes.",
     },
     "low_stt_confidence": {
         "hi-IN": "आपकी आवाज़ स्पष्ट नहीं आई। कृपया शांत जगह पर फिर से बोलें।",
@@ -55,6 +56,7 @@ PRE_BAKED: dict[str, dict[str, str]] = {
         "kn-IN": "ನಿಮ್ಮ ಧ್ವನಿ ಸ್ಪಷ್ಟವಾಗಿ ಬರಲಿಲ್ಲ. ಶಾಂತ ಸ್ಥಳದಲ್ಲಿ ಮತ್ತೊಮ್ಮೆ ಮಾತನಾಡಿ.",
         "mr-IN": "तुमचा आवाज स्पष्ट आला नाही. शांत ठिकाणी पुन्हा बोला.",
         "pa-IN": "ਤੁਹਾਡੀ ਆਵਾਜ਼ ਸਪੱਸ਼ਟ ਨਹੀਂ ਸੀ। ਕਿਸੇ ਸ਼ਾਂਤ ਥਾਂ 'ਤੇ ਦੁਬਾਰਾ ਬੋਲੋ।",
+        "en-IN": "Your voice wasn't clear. Please speak again in a quiet place.",
     },
     "missing_entity": {
         "hi-IN": "कृपया अपना राज्य और जिला भी बताएं।",
@@ -63,6 +65,7 @@ PRE_BAKED: dict[str, dict[str, str]] = {
         "kn-IN": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ರಾಜ್ಯ ಮತ್ತು ಜಿಲ್ಲೆ ತಿಳಿಸಿ.",
         "mr-IN": "कृपया तुमचे राज्य आणि जिल्हा सांगा.",
         "pa-IN": "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਰਾਜ ਅਤੇ ਜ਼ਿਲ੍ਹਾ ਦੱਸੋ।",
+        "en-IN": "Please also state your state and district.",
     },
 }
 
