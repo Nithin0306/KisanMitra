@@ -3,6 +3,7 @@ import {
   View, Text, ScrollView, TouchableOpacity,
   ActivityIndicator, StyleSheet,
 } from 'react-native';
+import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAppContext, CropResponse, MarketResponse, SchemeResponse } from '../context/AppContext';
@@ -57,7 +58,7 @@ export function ResponseScreen() {
     <SafeAreaView style={styles.safe}>
 
       {/* Header */}
-      <View style={styles.header}>
+      <Animated.View entering={FadeInDown.delay(50).springify()} style={styles.header}>
         <TouchableOpacity
           onPress={handleBack}
           style={styles.headerBtn}
@@ -73,7 +74,7 @@ export function ResponseScreen() {
         >
           <Text style={{ fontSize: 20 }}>🔊</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       <ScrollView
         style={styles.scroll}
@@ -81,37 +82,43 @@ export function ResponseScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* AI voice bubble */}
-        <View style={styles.voiceBubble}>
+        <Animated.View entering={FadeInDown.delay(150).springify()} style={styles.voiceBubble}>
           <Text style={{ fontSize: 22, marginTop: 2 }}>🤖</Text>
           <Text style={styles.voiceText}>{voice_explanation}</Text>
-        </View>
+        </Animated.View>
 
         {/* Transcript chip */}
         {state.currentTranscript ? (
-          <View style={styles.transcriptChip}>
+          <Animated.View entering={FadeInDown.delay(250).springify()} style={styles.transcriptChip}>
             <Text style={{ fontSize: 14 }}>🎤</Text>
             <Text style={styles.transcriptText} numberOfLines={2}>
               {state.currentTranscript}
             </Text>
-          </View>
+          </Animated.View>
         ) : null}
 
         {/* Feature cards */}
         {!feature_response.error_code && intent === 'crop_recommendation' && (
-          <CropCard data={feature_response as CropResponse} />
+          <Animated.View entering={FadeInDown.delay(350).springify()}>
+            <CropCard data={feature_response as CropResponse} />
+          </Animated.View>
         )}
         {!feature_response.error_code && intent === 'market_price' && (
-          <MarketCard data={feature_response as MarketResponse} />
+          <Animated.View entering={FadeInDown.delay(350).springify()}>
+            <MarketCard data={feature_response as MarketResponse} />
+          </Animated.View>
         )}
         {!feature_response.error_code && intent === 'scheme_match' && (
-          <SchemeCard data={feature_response as SchemeResponse} />
+          <Animated.View entering={FadeInDown.delay(350).springify()}>
+            <SchemeCard data={feature_response as SchemeResponse} />
+          </Animated.View>
         )}
 
         {(intent === 'unknown' || feature_response.error_code) && (
-          <View style={styles.unknownCard}>
+          <Animated.View entering={FadeInDown.delay(350).springify()} style={styles.unknownCard}>
             <Text style={{ fontSize: 48 }}>🤔</Text>
             <Text style={styles.unknownText}>{voice_explanation}</Text>
-          </View>
+          </Animated.View>
         )}
 
         {degraded_mode && (
@@ -126,7 +133,7 @@ export function ResponseScreen() {
       </ScrollView>
 
       {/* Ask again button */}
-      <View style={styles.bottomBar}>
+      <Animated.View entering={FadeIn.delay(500).duration(600)} style={styles.bottomBar}>
         <TouchableOpacity
           style={styles.askAgainBtn}
           onPress={handleBack}
@@ -135,7 +142,7 @@ export function ResponseScreen() {
           <Text style={{ fontSize: 22 }}>🎤</Text>
           <Text style={styles.askAgainText}>{strings.tapToSpeak}</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 }
