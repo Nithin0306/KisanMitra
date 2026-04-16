@@ -327,6 +327,6 @@ async def process(entities: dict, rules: dict, forecast: list[DayForecast] | Non
         top_3_crops=top3,
         risk_level=risk_level,
         reasoning_factors=reasoning,
-        degraded_mode=(weather_source != "live"),
+        degraded_mode=(weather_source == "static_fallback"),
         weather_source=weather_source,  # type: ignore[arg-type]
     )

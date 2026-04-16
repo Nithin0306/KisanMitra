@@ -42,7 +42,7 @@ class LLMServiceProtocol(Protocol):
     ) -> IntentResult: ...
 
     async def generate_explanation(
-        self, factors: list[str], feature: str, language_code: str
+        self, factors: list[str], feature: str, language_code: str, fallback: str = ""
     ) -> str: ...
 
 
@@ -157,6 +157,7 @@ class VertexAILLMService:
         factors: list[str],
         feature: str,
         language_code: str,
+        fallback: str = "",
     ) -> str:
         factors_text = "\n".join(f"- {f}" for f in factors)
         prompt = NLG_PROMPT_TEMPLATE.format(
@@ -173,8 +174,7 @@ class VertexAILLMService:
             return explanation
         except Exception as exc:
             log.error("llm_service.nlg_failed", error=str(exc))
-            # Fallback: join raw factors in English — always better than silence
-            return " ".join(factors[:3])
+            return fallback or " ".join(factors[:3])
 
 
 #  Gemini API implementation (fallback) 
@@ -246,6 +246,7 @@ class GeminiLLMService:
         factors: list[str],
         feature: str,
         language_code: str,
+        fallback: str = "",
     ) -> str:
         factors_text = "\n".join(f"- {f}" for f in factors)
         prompt = NLG_PROMPT_TEMPLATE.format(
@@ -261,7 +262,7 @@ class GeminiLLMService:
             return explanation
         except Exception as exc:
             log.error("llm_service.nlg_failed", error=str(exc))
-            return " ".join(factors[:3])
+            return fallback or " ".join(factors[:3])
 
 
 #  Factory 

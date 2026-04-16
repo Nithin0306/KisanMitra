@@ -67,6 +67,15 @@ PRE_BAKED: dict[str, dict[str, str]] = {
         "pa-IN": "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਰਾਜ ਅਤੇ ਜ਼ਿਲ੍ਹਾ ਦੱਸੋ।",
         "en-IN": "Please also state your state and district.",
     },
+    "nlg_fallback": {
+        "hi-IN": "आपके लिए सुझाव स्क्रीन पर दिए गए हैं।",
+        "ta-IN": "உங்களுக்கான பரிந்துரைகள் திரையில் கொடுக்கப்பட்டுள்ளன.",
+        "te-IN": "మీ కోసం సూచనలు స్క్రీన్‌పై ఇవ్వబడ్డాయి.",
+        "kn-IN": "ನಿಮಗಾಗಿ ಶಿಫಾರಸುಗಳನ್ನು ಪರದೆಯ ಮೇಲೆ ನೀಡಲಾಗಿದೆ.",
+        "mr-IN": "तुमच्यासाठी शिफारसी स्क्रीनवर दिल्या आहेत.",
+        "pa-IN": "ਤੁਹਾਡੇ ਲਈ ਸੁਝਾਅ ਸਕ੍ਰੀਨ 'ਤੇ ਦਿੱਤੇ ਗਏ ਹਨ।",
+        "en-IN": "The recommendations for you are provided on the screen.",
+    },
 }
 
 
@@ -238,6 +247,7 @@ async def handle_query(
         factors=reasoning_factors,
         feature=intent_result.intent,
         language_code=request.language_code,
+        fallback=_pre_baked("nlg_fallback", request.language_code),
     )
 
     return VoiceQueryResponse(
