@@ -33,7 +33,7 @@ export class APIError extends Error {
 
 // Shared fetch helper
 
-const REQUEST_TIMEOUT_MS = 12_000; // 12s — accounts for slow rural 2G/3G connections
+const REQUEST_TIMEOUT_MS = 30_000; // 30s — accounts for slow rural 2G/3G connections and slow LLM retries
 
 async function apiFetch<T>(
   path: string,

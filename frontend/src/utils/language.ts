@@ -23,6 +23,13 @@ type UIStrings = {
   unknown: string;
   eligibility: string;
   learnMore: string;
+  riskHigh: string;
+  riskMedium: string;
+  riskLow: string;
+  fitOptimal: string;
+  fitMarginal: string;
+  fitUnsuitable: string;
+  offlineData: string;
   // Landing page
   landingBadge: string;
   landingTitle: string;
@@ -60,6 +67,13 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'जानकारी उपलब्ध नहीं',
     eligibility: 'पात्रता',
     learnMore: 'और जानें',
+    riskHigh: 'उच्च',
+    riskMedium: 'मध्यम',
+    riskLow: 'कम',
+    fitOptimal: '✅ उत्तम परिस्थितियाँ',
+    fitMarginal: '⚠️ सीमान्त परिस्थितियाँ',
+    fitUnsuitable: '❌ अनुपयुक्त',
+    offlineData: '⚠️ सहेजे गए डेटा का उपयोग',
     landingBadge: '✨ खेती के भविष्य में आपका स्वागत है',
     landingTitle: 'किसान',
     landingTitleHighlight: 'मित्र',
@@ -97,6 +111,13 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'தகவல் இல்லை',
     eligibility: 'தகுதி',
     learnMore: 'மேலும் அறிக',
+    riskHigh: 'அதிகம்',
+    riskMedium: 'நடுத்தரம்',
+    riskLow: 'குறைவு',
+    fitOptimal: '✅ உகந்த நிலை',
+    fitMarginal: '⚠️ ஓரளவு உகந்த நிலை',
+    fitUnsuitable: '❌ உகந்ததல்ல',
+    offlineData: '⚠️ ஆஃப்லைன் டேட்டா',
     landingBadge: '✨ விவசாயத்தின் எதிர்காலத்திற்கு வரவேற்கிறோம்',
     landingTitle: 'கிசான்',
     landingTitleHighlight: 'மித்ரா',
@@ -134,6 +155,13 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'సమాచారం అందుబాటులో లేదు',
     eligibility: 'అర్హత',
     learnMore: 'మరింత తెలుసుకోండి',
+    riskHigh: 'ఎక్కువ',
+    riskMedium: 'మధ్యస్థం',
+    riskLow: 'తక్కువ',
+    fitOptimal: '✅ ఉత్తమ పరిస్థితులు',
+    fitMarginal: '⚠️ పాక్షిక అనుకూలం',
+    fitUnsuitable: '❌ ప్రతికూలం',
+    offlineData: '⚠️ ఆఫ్‌లైన్ డేటా',
     landingBadge: '✨ వ్యవసాయ భవిష్యత్తుకు స్వాగతం',
     landingTitle: 'కిసాన్',
     landingTitleHighlight: 'మిత్ర',
@@ -171,6 +199,13 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ',
     eligibility: 'ಅರ್ಹತೆ',
     learnMore: 'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ',
+    riskHigh: 'ಹೆಚ್ಚು',
+    riskMedium: 'ಮಧ್ಯಮ',
+    riskLow: 'ಕಡಿಮೆ',
+    fitOptimal: '✅ ಉತ್ತಮ ಪರಿಸ್ಥಿತಿ',
+    fitMarginal: '⚠️ ಸಾಧಾರಣ ಪರಿಸ್ಥಿತಿ',
+    fitUnsuitable: '❌ ಸೂಕ್ತವಲ್ಲ',
+    offlineData: '⚠️ ಆಫ್‌ಲೈನ್ ಡೇಟಾ',
     landingBadge: '✨ ಕೃಷಿಯ ಭವಿಷ್ಯಕ್ಕೆ ಸ್ವಾಗತ',
     landingTitle: 'ಕಿಸಾನ್',
     landingTitleHighlight: 'ಮಿತ್ರ',
@@ -208,6 +243,13 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'माहिती उपलब्ध नाही',
     eligibility: 'पात्रता',
     learnMore: 'अधिक जाणून घ्या',
+    riskHigh: 'उच्च',
+    riskMedium: 'मध्यम',
+    riskLow: 'कमी',
+    fitOptimal: '✅ इष्टतम परिस्थिती',
+    fitMarginal: '⚠️ किरकोळ परिस्थिती',
+    fitUnsuitable: '❌ अयोग्य',
+    offlineData: '⚠️ ऑफलाइन डेटा',
     landingBadge: '✨ शेतीच्या भविष्यात आपले स्वागत आहे',
     landingTitle: 'किसान',
     landingTitleHighlight: 'मित्र',
@@ -245,10 +287,17 @@ const strings: Record<LanguageCode, UIStrings> = {
     unknown: 'Info unavailable',
     eligibility: 'Eligibility',
     learnMore: 'Learn more',
+    riskHigh: 'HIGH',
+    riskMedium: 'MEDIUM',
+    riskLow: 'LOW',
+    fitOptimal: '✅ Optimal conditions',
+    fitMarginal: '⚠️ Marginal conditions',
+    fitUnsuitable: '❌ Unsuitable',
+    offlineData: '⚠️ Using offline data',
     landingBadge: '✨ Welcome to the Future of Farming',
     landingTitle: 'Kisan',
     landingTitleHighlight: 'Mitra',
-    landingSubtitle: 'Your AI-powered agricultural assistant. Voice-first, hallucination-free, and designed to help you maximize your yield.',
+    landingSubtitle: 'Your farming assistant that listens, understands, and helps you grow better crops and earn more.',
     landingCta: 'Try the Assistant 🎙️',
     landingCtaSub: 'No sign-up required. Free for farmers.',
     landingHowLabel: 'HOW IT WORKS',
@@ -266,4 +315,34 @@ const strings: Record<LanguageCode, UIStrings> = {
 
 export function useStrings(lang: LanguageCode): UIStrings {
   return strings[lang] ?? strings['hi-IN'];
+}
+
+const CROP_DICT: Record<LanguageCode, Record<string, string>> = {
+  'hi-IN': {
+    chickpea: 'चना', sorghum: 'ज्वार', cotton: 'कपास', maize: 'मक्का', mustard: 'सरसों',
+    pearl_millet: 'बाजरा', groundnut: 'मूंगफली', rice: 'धान', sugarcane: 'गन्ना', wheat: 'गेहूं',
+  },
+  'ta-IN': {
+    chickpea: 'கொண்டைக்கடலை', sorghum: 'சோளம்', cotton: 'பருத்தி', maize: 'மக்காச்சோளம்', mustard: 'கடுகு',
+    pearl_millet: 'கம்பு', groundnut: 'நிலக்கடலை', rice: 'நெல்', sugarcane: 'கரும்பு', wheat: 'கோதுமை',
+  },
+  'te-IN': {
+    chickpea: 'శనగ', sorghum: 'జొన్న', cotton: 'పత్తి', maize: 'మొక్కజొన్న', mustard: 'ఆవాలు',
+    pearl_millet: 'సజ్జ', groundnut: 'వేరుశనగ', rice: 'వరి', sugarcane: 'చెరకు', wheat: 'గోధుమ',
+  },
+  'kn-IN': {
+    chickpea: 'ಕಡಲೆ', sorghum: 'ಜೋಳ', cotton: 'ಹತ್ತಿ', maize: 'ಮೆಕ್ಕೆಜೋಳ', mustard: 'ಸಾಸಿವೆ',
+    pearl_millet: 'ಸಜ್ಜೆ', groundnut: 'ಕಡಲೆಕಾಯಿ', rice: 'ಭತ್ತ', sugarcane: 'ಕಬ್ಬು', wheat: 'ಗೋಧಿ',
+  },
+  'mr-IN': {
+    chickpea: 'हरभरा', sorghum: 'ज्वारी', cotton: 'कापूस', maize: 'मका', mustard: 'मोहरी',
+    pearl_millet: 'बाजरी', groundnut: 'भुईमूग', rice: 'तांदूळ', sugarcane: 'ऊस', wheat: 'गहू',
+  },
+  'en-IN': {},
+};
+
+export function translateCrop(cropName: string, lang: LanguageCode): string {
+  const normalized = cropName.toLowerCase().replace(' ', '_');
+  const dict = CROP_DICT[lang] || {};
+  return dict[normalized] || cropName.replace('_', ' ');
 }

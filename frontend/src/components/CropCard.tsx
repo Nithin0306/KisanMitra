@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { CropResponse } from '../context/AppContext';
 import { RISK_COLORS } from '../utils/constants';
-import { useStrings } from '../utils/language';
 import { useAppContext } from '../context/AppContext';
+import { useStrings, translateCrop } from '../utils/language';
 
 const CROP_EMOJI: Record<string, string> = {
   wheat: '🌾', rice: '🍚', chickpea: '🫘', cotton: '🌿',
@@ -28,7 +28,7 @@ export function CropCard({ data }: Props) {
         <Text style={styles.title}>{strings.cropCard}</Text>
         <View style={[styles.riskBadge, { backgroundColor: riskColor.bg, borderColor: riskColor.border }]}>
           <Text style={[styles.riskText, { color: riskColor.text }]}>
-            {strings.riskLabel}: {data.risk_level.toUpperCase()}
+            {strings.riskLabel}: {data.risk_level === 'high' ? strings.riskHigh : data.risk_level === 'medium' ? strings.riskMedium : strings.riskLow}
           </Text>
         </View>
       </View>
@@ -39,11 +39,11 @@ export function CropCard({ data }: Props) {
             <Text style={styles.cropEmoji}>{cropEmoji(crop.crop_name)}</Text>
             <View style={styles.cropInfo}>
               <Text style={[styles.cropName, idx === 0 && styles.topCropName]}>
-                {idx === 0 ? '⭐ ' : `${idx + 1}. `}{crop.crop_name.replace('_', ' ')}
+                {idx === 0 ? '⭐ ' : `${idx + 1}. `}<Text style={{ textTransform: 'capitalize' }}>{translateCrop(crop.crop_name, state.language)}</Text>
               </Text>
               <Text style={styles.cropFit}>
-                {crop.climate_fit === 'optimal' ? '✅ Optimal conditions'
-                  : crop.climate_fit === 'marginal' ? '⚠️ Marginal conditions' : ''}
+                {crop.climate_fit === 'optimal' ? strings.fitOptimal
+                  : crop.climate_fit === 'marginal' ? strings.fitMarginal : strings.fitUnsuitable}
               </Text>
             </View>
           </View>
@@ -57,7 +57,7 @@ export function CropCard({ data }: Props) {
       )}
 
       {data.degraded_mode && (
-        <Text style={styles.degraded}>⚠️ Using offline data</Text>
+        <Text style={styles.degraded}>{strings.offlineData}</Text>
       )}
     </View>
   );
