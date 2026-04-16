@@ -3,6 +3,7 @@ import {
   View, Text, TouchableOpacity, Vibration, Platform,
   StyleSheet, ScrollView,
 } from 'react-native';
+import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { MicButton } from '../components/MicButton';
@@ -92,7 +93,7 @@ export function HomeScreen() {
     <SafeAreaView style={styles.safe}>
 
       {backendOnline === false && (
-        <View style={styles.offlineBanner}>
+        <Animated.View entering={FadeInDown.delay(50).springify()} style={styles.offlineBanner}>
           <Text style={styles.offlineText}>
             ⚠️ Backend offline — server is not reachable
           </Text>
@@ -102,27 +103,29 @@ export function HomeScreen() {
           >
             <Text style={styles.retryText}>Retry</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       )}
 
-      <LanguageSelector />
+      <Animated.View entering={FadeInDown.delay(100).springify()}>
+        <LanguageSelector />
+      </Animated.View>
 
       <View style={styles.flex1} />
 
-      <View style={styles.heroArea}>
+      <Animated.View entering={FadeInDown.delay(200).springify()} style={styles.heroArea}>
         <Text style={styles.logo}>🌾</Text>
         <Text style={styles.appName}>KisanMitra</Text>
         <Text style={styles.tagline} numberOfLines={2}>
           किसान का दोस्त · கர்ஷகனின் நண்பன் · రైతు మిత్రుడు
         </Text>
-      </View>
+      </Animated.View>
 
-      <View style={styles.micArea}>
+      <Animated.View entering={FadeInDown.delay(350).springify()} style={styles.micArea}>
         <MicButton onPress={handleMicPress} />
-      </View>
+      </Animated.View>
 
       {state.error ? (
-        <View style={styles.errorBanner}>
+        <Animated.View entering={FadeIn.delay(100).duration(300)} style={styles.errorBanner}>
           <Text style={styles.errorText}>{state.error}</Text>
           <TouchableOpacity
             onPress={() => dispatch({ type: 'SET_ERROR', payload: '' })}
@@ -130,19 +133,21 @@ export function HomeScreen() {
           >
             <Text style={styles.errorDismiss}>✕</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       ) : state.response && !state.isListening && !state.isLoading ? (
-        <TouchableOpacity
-          style={styles.chipRow}
-          onPress={() => router.push('/response' as any)}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.chipIcon}>💬</Text>
-          <Text style={styles.chipText} numberOfLines={1}>
-            {state.response.voice_explanation}
-          </Text>
-          <Text style={styles.chipArrow}>›</Text>
-        </TouchableOpacity>
+        <Animated.View entering={FadeIn.delay(100).duration(300)}>
+          <TouchableOpacity
+            style={styles.chipRow}
+            onPress={() => router.push('/response' as any)}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.chipIcon}>💬</Text>
+            <Text style={styles.chipText} numberOfLines={1}>
+              {state.response.voice_explanation}
+            </Text>
+            <Text style={styles.chipArrow}>›</Text>
+          </TouchableOpacity>
+        </Animated.View>
       ) : null}
 
       <View style={styles.flex2} />

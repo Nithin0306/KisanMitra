@@ -1,3 +1,3 @@
 // app/index.tsx — Home route (maps to /)
-import { HomeScreen } from '../src/screens/HomeScreen';
-export default HomeScreen;
+import { LandingScreen } from '../src/screens/LandingScreen';
+export default LandingScreen;
